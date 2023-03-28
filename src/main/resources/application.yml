@@ -25,3 +25,11 @@ spring:
 logging:
   level:
     com.example.AMD: DEBUG
+
+  thymeleaf:
+    prefix : classpath:templates/
+    suffix : .html
+    cache : false
+  devtools:
+    livereload:
+      enabled : true
