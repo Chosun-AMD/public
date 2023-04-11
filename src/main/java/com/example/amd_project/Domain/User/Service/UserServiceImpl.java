@@ -6,10 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-
 /**
  * 회원 등록
  * @author 황시준
@@ -21,7 +19,6 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class UserServiceImpl implements UserRepository {
     private final RestTemplate restTemplate;
-    private final PasswordEncoder passwordEncoder;
 
     /**
      * 회원가입 기능 구현
@@ -30,13 +27,11 @@ public class UserServiceImpl implements UserRepository {
      * @return
      */
     @Override
-        public ResponseUserRegisterDTO signUp(RequestUserRegisterDTO requestUserRegisterDTO) {
-            String signupurl = "http://localhost:9000/auth/signup";
-            requestUserRegisterDTO.setPwd(passwordEncoder.encode(requestUserRegisterDTO.getPwd()));
-
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
-            HttpEntity<RequestUserRegisterDTO> entity = new HttpEntity<>(requestUserRegisterDTO, headers);
+    public ResponseUserRegisterDTO signUp(RequestUserRegisterDTO requestUserRegisterDTO) {
+        String signupurl = "http://localhost:8000/auth/signup";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        HttpEntity<RequestUserRegisterDTO> entity = new HttpEntity<>(requestUserRegisterDTO, headers);
 
         ResponseEntity<ResponseDTO<ResponseUserRegisterDTO>> response = restTemplate.exchange(
                 signupurl,
@@ -50,22 +45,4 @@ public class UserServiceImpl implements UserRepository {
         return response.getBody().getData();
     }
 
-    @Override
-    public ResponseUserLoginDTO login(RequestUserLoginDTO requestUserLoginDTO){
-        String loginurl = "http://localhost:9000/auth/login";
-        log.info("Email = {}", requestUserLoginDTO);
-
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        HttpEntity entity = new HttpEntity<>(requestUserLoginDTO, headers);
-
-        ResponseEntity<ResponseDTO<ResponseUserLoginDTO>> response = restTemplate.exchange(
-                loginurl,
-                HttpMethod.POST,
-                entity,
-                new ParameterizedTypeReference<>() {
-                }
-        );
-        return response.getBody().getData();
-    }
 }

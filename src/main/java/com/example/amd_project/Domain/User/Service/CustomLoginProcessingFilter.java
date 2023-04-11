@@ -1,7 +1,12 @@
 package com.example.amd_project.Domain.User.Service;
 
+import com.example.amd_project.Domain.User.DTO.RequestUserRegisterDTO;
+import com.example.amd_project.Domain.User.DTO.ResponseDTO;
+import com.example.amd_project.Domain.User.DTO.ResponseUserRegisterDTO;
 import com.example.amd_project.Global.Exception.InvalidLoginRequestException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.*;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -20,18 +25,17 @@ public class CustomLoginProcessingFilter extends AbstractAuthenticationProcessin
     }
 
     @Override
-    public Authentication attemptAuthentication(
-            HttpServletRequest request, HttpServletResponse response
-    )throws AuthenticationException, IOException, ServletException{
-        String email = request.getParameter("email");
+    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
+            throws AuthenticationException, IOException, ServletException{
+        String userId = request.getParameter("userId");
         String pwd = request.getParameter("pwd");
 
-        if(Objects.isNull(email) || Objects.isNull(pwd)){
+        if(Objects.isNull(userId) || Objects.isNull(pwd)){
             throw new InvalidLoginRequestException();
         }
 
         return getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(
-                email,
+                userId,
                 pwd
         ));
     }

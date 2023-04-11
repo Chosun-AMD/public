@@ -12,6 +12,10 @@ import java.util.Date;
 @AllArgsConstructor
 public class RequestUserRegisterDTO {
     // 회원가입 시 사용할 DTO
+    @Size(min=8, message="ID는 8글자 이상 입력해 주세요.")
+    @NotBlank(message = "ID가 비어있습니다.")
+    private String userId;   // 이메일
+
     @NotBlank(message = "이메일이 비어있습니다.")
     private String email;   // 이메일
 
@@ -24,10 +28,14 @@ public class RequestUserRegisterDTO {
 
     public Users toEntity(Date now){
         return Users.builder()
+                .userId(getUserId())
                 .email(getEmail())
                 .pwd(getPwd())
                 .name(getName())
                 .createAt(now)
                 .build();
     }
-}
+
+    public void setEncryptPassword(String encryptPassword){
+        this.pwd = encryptPassword;
+    }}

@@ -7,5 +7,5 @@ import com.example.amd_project.Domain.User.DTO.ResponseUserRegisterDTO;
 
 public interface UserRepository{
     ResponseUserRegisterDTO signUp(RequestUserRegisterDTO request);
-    ResponseUserLoginDTO login(RequestUserLoginDTO userLoginDTO);
+    //0ResponseUserLoginDTO login(RequestUserLoginDTO userLoginDTO);
 }
