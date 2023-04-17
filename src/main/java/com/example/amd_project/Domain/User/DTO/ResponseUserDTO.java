@@ -17,10 +17,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResponseUserDTO {
-    private String userId;
     private String email;
     private String name;
-    private String pwd;
-    private List<String> authority;
+    private String userId;
+
     // private String authority;
 }

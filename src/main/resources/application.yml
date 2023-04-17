@@ -5,6 +5,13 @@ spring:
   application:
     name: AMD-Public
 
+  api-gateway:
+    host: localhost
+    port: 8000
+
+  auth:
+    url: http://localhost:8000/auth
+
   mvc:
     static-path-pattern=/static/**:
 

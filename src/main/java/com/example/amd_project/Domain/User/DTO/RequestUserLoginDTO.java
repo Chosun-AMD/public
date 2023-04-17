@@ -11,8 +11,8 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RequestUserLoginDTO {
-    @NotBlank(message = "ID가 비어있습니다.")
-    private String userId;
+    @NotBlank(message = "Email이 비어있습니다.")
+    private String email;
 
     @Size(min = 8, message = "PW는 최소 8자 이상 입력해야합니다.")
     @NotBlank(message = "비밀번호가 비어있습니다.")

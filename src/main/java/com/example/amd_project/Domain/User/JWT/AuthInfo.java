@@ -15,14 +15,16 @@ public class AuthInfo implements Serializable {
     private String userId;
     private String email;
     private String accessToken;
-    private List<String> authorities;
+    // private List<String> authorities;
+    private String authorities;
     private String refreshToken;
     private Long accessTokenExpiresIn;
 
     public AuthInfo(
             ResponseUserDTO responseUserDTO,
             String accessToken,
-            List<String> authorities,
+            //List<String> authorities,
+            // String authorities,
             String refreshToken,
             Long accessTokenExpiresIn
     ) {

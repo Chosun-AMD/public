@@ -35,20 +35,13 @@ public class UserController {
     @PostMapping("/signup")
     public String signUp(@Valid RequestUserRegisterDTO requestUserRegisterDTO){
         userServiceImpl.signUp(requestUserRegisterDTO);
-        return "test";
-    }
-
-
-    @GetMapping("/loginform")
-    public String login(){
         return "user/login";
     }
 
-    /*
-    @PostMapping("/login")
-    public String login(RequestUserLoginDTO userDTO){
-        userServiceImpl.login(userDTO);
-        return "test";
+
+
+    @GetMapping("/login-page")
+    public String login(){
+        return "user/login";
     }
-     */
 }

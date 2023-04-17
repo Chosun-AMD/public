@@ -10,6 +10,7 @@ import org.springframework.http.*;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.RedirectStrategy;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 
 import javax.servlet.ServletException;
@@ -20,6 +21,7 @@ import java.util.Objects;
 
 @Slf4j
 public class CustomLoginProcessingFilter extends AbstractAuthenticationProcessingFilter {
+
     public CustomLoginProcessingFilter(String processingUrl) {
         super(processingUrl);
     }
@@ -27,15 +29,15 @@ public class CustomLoginProcessingFilter extends AbstractAuthenticationProcessin
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException, IOException, ServletException{
-        String userId = request.getParameter("userId");
+        String email = request.getParameter("email");
         String pwd = request.getParameter("pwd");
 
-        if(Objects.isNull(userId) || Objects.isNull(pwd)){
+        if(Objects.isNull(email) || Objects.isNull(pwd)){
             throw new InvalidLoginRequestException();
         }
 
         return getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(
-                userId,
+                email,
                 pwd
         ));
     }
