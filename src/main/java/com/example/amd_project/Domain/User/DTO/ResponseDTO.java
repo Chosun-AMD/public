@@ -8,6 +8,11 @@ import java.util.List;
 import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 
+/**
+ * 예외처리를 해주는 클래스입니다.
+ * @author : 황시준
+ * @since : 1.0
+ */
 public class ResponseDTO<T> {
     private boolean success;
     @JsonIgnore

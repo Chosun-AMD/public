@@ -31,13 +31,12 @@ public class UserServiceImpl implements UserRepository {
      */
     @Override
     public ResponseUserRegisterDTO signUp(RequestUserRegisterDTO requestUserRegisterDTO) {
-        String signupurl = authUrl + "/signup";
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<RequestUserRegisterDTO> entity = new HttpEntity<>(requestUserRegisterDTO, headers);
 
         ResponseEntity<ResponseDTO<ResponseUserRegisterDTO>> response = restTemplate.exchange(
-                signupurl,
+                authUrl + "/signup",
                 HttpMethod.POST,
                 entity,
                 new ParameterizedTypeReference<>() {

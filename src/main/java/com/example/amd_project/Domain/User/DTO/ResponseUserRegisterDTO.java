@@ -17,5 +17,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class ResponseUserRegisterDTO {
     // private Long id;
+    private String userId;
+    private String email;
     private String name;
 }

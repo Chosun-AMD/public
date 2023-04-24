@@ -23,11 +23,11 @@ public class SecurityConfig {
                 .mvcMatchers("/dashboard/**").authenticated()
                 .anyRequest().permitAll();
         http.formLogin()
-                .loginPage("/user/login");
+                .loginPage("/user/login-page");
         http.logout()
                 .logoutUrl("/user/logout")
                 .addLogoutHandler(customLogoutHandler())
-                .logoutSuccessUrl("/user/login");
+                .logoutSuccessUrl("/user/login-page");
         http.addFilterAt(
                 customLoginProcessingFilter(),
                 UsernamePasswordAuthenticationFilter.class
@@ -45,8 +45,7 @@ public class SecurityConfig {
     }
     @Bean
     public CustomLoginProcessingFilter customLoginProcessingFilter(){
-        CustomLoginProcessingFilter customLoginProcessingFilter = new CustomLoginProcessingFilter(
-                "/user/login");
+        CustomLoginProcessingFilter customLoginProcessingFilter = new CustomLoginProcessingFilter("/user/login");
         customLoginProcessingFilter.setAuthenticationManager(customAuthenticationManager());
         customLoginProcessingFilter.setAuthenticationFailureHandler(authenticationFailureHandler());
         customLoginProcessingFilter.setAuthenticationSuccessHandler(customAuthenticationSuccessHandler());

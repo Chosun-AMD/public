@@ -30,6 +30,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static com.example.amd_project.Domain.User.JWT.AuthUtil.UUID_CODE;
 import static java.util.stream.Collectors.toList;
@@ -39,13 +40,14 @@ import static java.util.stream.Collectors.toList;
 public class CustomAuthenticationManager implements AuthenticationManager {
 
     private final UserAdapter userAdapter;
+    // private final String ROLES;
     private final String UUID_HEADER = "UUID";
     private static final String X_EXPIRE_HEADER = "X-Expire";
-    private AuthenticationProvider authenticationProvider;
 
 
     /**
      * 인증 서버에서 발급받은 JWT 토큰을 기반으로 유저 정보를 요청한 후 UsernamePasswordAuthenticationToken을 만들어 반환
+     * 현재 Redis에 헤더에 담긴 유저정보를 저장하려고 함. 추후 업데이트 예정
      *
      * @param authentication 인증 객체
      * @return 인증 객체 반환
@@ -61,25 +63,23 @@ public class CustomAuthenticationManager implements AuthenticationManager {
                 (String) authentication.getPrincipal(),
                 (String) authentication.getCredentials()
         );
-        // 권한 정보를 불러오는 코드, 우선은 사용 X
-        //ResponseEntity<LoginResponseDTO> exchange = userAdapter.getAuthInfo(requestUserLoginDTO);
-        //checkValidLoginRequest(exchange);
 
         ResponseEntity<Void> exchange = userAdapter.getAuthInfo(requestUserLoginDTO);
-        String uuid = Objects.requireNonNull(exchange.getHeaders().get(UUID_HEADER).get(0));
-        String expiredTime = Objects.requireNonNull(exchange.getHeaders()
-                .get(X_EXPIRE_HEADER)
-                .get(0));
 
-        String accessToken = extractAuthorizationHeader(exchange);
+        checkValidLoginRequest(exchange);
+
+        String uuid = Objects.requireNonNull(exchange.getHeaders().get(UUID_HEADER).get(0));        // UUID
+        String expiredTime = Objects.requireNonNull(exchange.getHeaders().get(X_EXPIRE_HEADER).get(0));     // EXPIRE
+        // String roles = Objects.requireNonNull(exchange.getHeaders().get(ROLES).get(0));         // ROLES
+
+        String accessToken = extractAuthorizationHeader(exchange);      // Authorization
 
         if (accessToken.startsWith("Bearer ")) {
             accessToken = accessToken.substring(7);
         }
 
         log.info("accessToken={}", accessToken);
-
-
+        
         // 로그인 이후 발급받은 accessToken을 가지고 user정보를 가져오는 과정
         ResponseEntity<ResponseDTO<ResponseUserDTO>> response = userAdapter.getUserInfo(
                 requestUserLoginDTO,
@@ -87,40 +87,21 @@ public class CustomAuthenticationManager implements AuthenticationManager {
         );
 
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_USER")); // "ROLE_USER"는 권한명, 필요에 따라 변경 가능
-        //authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN")); // "ROLE_ADMIN"은 다른 권한명, 필요에 따라 변경 가능
+        authorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        // authorities.add(new SimpleGrantedAuthority(roles); // "ROLE_USER"는 권한명, 필요에 따라 변경 가능
 
         String username = requestUserLoginDTO.getEmail();
         UserDetails userDetails = new User(username,"", authorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-
-        // String authorities = responseUserDTO.getAuthority();
-        // log.info("authorities={}", authorities);
-
-
         return new UsernamePasswordAuthenticationToken(
                 authentication.getPrincipal(),
-                authentication.getCredentials(),
+                null,
                 authentication.getAuthorities()
         );
 
         //return authenticationProvider.authenticate(authentication);
     }
-
-    /*
-    
-    private List<SimpleGrantedAuthority> getAuthorities(ResponseUserDTO responseUserDTO) {
-    // private ResponseUserDTO getAuthorities(ResponseUserDTO responseUserDTO){
-        ResponseUserDTO user = Objects.requireNonNull(responseUserDTO);
-        log.info("member={}", user);
-
-        return user.getAuthority().stream()
-                .map(SimpleGrantedAuthority::new)
-                .collect(toList());
-
-    }
-     */
     
     /**
      * 로그인 요청 시 올바른 결과인지 판별하기 위해 Response Header를 검증하는 기능
@@ -130,19 +111,12 @@ public class CustomAuthenticationManager implements AuthenticationManager {
      * @author : 황시준
      * @since : 1.0
      */
-    private void checkValidLoginRequest(ResponseEntity<LoginResponseDTO> exchange){
-        log.info("Auth Server Excnahge Check={}", exchange);
-
-        /*
-        if(!exchange.getHeaders())
-            throw new BadCredentialsException("자격 증명 실패");
-        }
-        */
-        if(exchange.getStatusCode().equals(200)){
+    private void checkValidLoginRequest(ResponseEntity<Void> exchange) {
+        log.info("Auth server exchange check={}", exchange);
+        if (!exchange.getHeaders().containsKey(UUID_HEADER) || !exchange.getHeaders().containsKey(HttpHeaders.AUTHORIZATION)) {
             throw new BadCredentialsException("자격 증명 실패");
         }
     }
-
     /**
      * 로그인 시 Auth 서버에서 제공 받은 응답 헤더를 추출하는 기능입니다.
      *

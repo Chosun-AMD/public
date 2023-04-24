@@ -32,7 +32,7 @@ public class CustomFailureHandler implements AuthenticationFailureHandler {
     )throws IOException, ServletException {
         {
             log.info("Failure Handler called");
-            response.sendRedirect("/user/login");
+            response.sendRedirect("/user/login-page");
         }
     }
 }

@@ -1,13 +1,10 @@
 package com.example.amd_project.Domain.User.Controller;
 
-import com.example.amd_project.Domain.User.DTO.RequestUserLoginDTO;
 import com.example.amd_project.Domain.User.DTO.RequestUserRegisterDTO;
-import com.example.amd_project.Domain.User.DTO.ResponseUserRegisterDTO;
 import com.example.amd_project.Domain.User.Repository.UserRepository;
 import com.example.amd_project.Domain.User.Service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -16,14 +13,11 @@ import javax.validation.Valid;
 @RequestMapping("/user")
 public class UserController {
     private UserServiceImpl userServiceImpl;
-    private final UserRepository userRepository;
 
     // 객체 주입(초기화)
     @Autowired
-    public UserController(UserServiceImpl userServiceImpl,
-                          UserRepository userRepository){
+    public UserController(UserServiceImpl userServiceImpl){
         this.userServiceImpl = userServiceImpl;
-        this.userRepository = userRepository;
     }
 
     // 회원가입 페이지 이동
@@ -35,13 +29,11 @@ public class UserController {
     @PostMapping("/signup")
     public String signUp(@Valid RequestUserRegisterDTO requestUserRegisterDTO){
         userServiceImpl.signUp(requestUserRegisterDTO);
-        return "user/login";
+        return "user/login-page";
     }
 
-
-
     @GetMapping("/login-page")
-    public String login(){
-        return "user/login";
+    public String loginPage(){
+        return "user/login-page";
     }
 }

@@ -21,11 +21,15 @@ import java.net.URI;
 public class UserAdapter {
     @Value("${spring.auth.url}")
     private String authUrl;
+
+    @Value("${spring.user.url}")
+    private String userUrl;
+
     private final RestTemplate restTemplate;
 
 
     /**
-     * 로그인 과정에서 Auth Server에서 인증도니 JWT 형식의 accessToken과 uuid를 받아오는 기능
+     * 로그인 과정에서 Auth Server에서 인증된 JWT 형식의 accessToken과 uuid를 받아오는 기능
      * 해당 정보들은 HTTP Response Header에 담겨 반환됨
      *
      * @param requestUserLoginDTO 회원이 로그인 시 입력한 정보를 담은 DTO
@@ -61,17 +65,15 @@ public class UserAdapter {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.set("Authorization", "Bearer " + accessToken); // Bearer 토큰 설정
 
-        int portNum = 8000;     // localhost:9000으로 통신할 포트 지정(나중에 삭제)
         URI uri = UriComponentsBuilder
-                .fromUriString("http://localhost")
-                .port(portNum)
-                .path("/user/{email}")
+                .fromUriString(userUrl)
+                .path("/{email}")
                 .encode()
                 .build()
                 .expand(requestUserLoginDTO.getEmail())
                 .toUri();
 
-        System.out.println("uri : " + uri);
+        log.info("uri : " + uri);
 
         return restTemplate.exchange(
                 uri,
