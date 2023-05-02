@@ -11,7 +11,10 @@ spring:
     password: guest
   mvc:
     static-path-pattern=/static/**:
-
+  auth:
+    url: http://10.96.100.34:8000/auth
+  user:
+    url: http://10.96.100.35:8000/user
   devtools:
     livereload:
       enabled : true
