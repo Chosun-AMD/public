@@ -46,5 +46,4 @@ public class UserServiceImpl implements UserRepository {
         log.info("response={}", response.getBody().getData());
         return response.getBody().getData();
     }
-
 }
