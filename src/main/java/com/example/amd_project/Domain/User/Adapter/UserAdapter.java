@@ -3,16 +3,19 @@ package com.example.amd_project.Domain.User.Adapter;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
 
 import com.example.amd_project.Domain.User.DTO.*;
+import com.example.amd_project.Global.Exception.GlobalExceptionHandler;
+import com.example.amd_project.Global.Exception.InvalidLoginRequestException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
-
+import java.io.IOException;
 import java.net.URI;
 
 @Slf4j
@@ -27,7 +30,6 @@ public class UserAdapter {
 
     private final RestTemplate restTemplate;
 
-
     /**
      * 로그인 과정에서 Auth Server에서 인증된 JWT 형식의 accessToken과 uuid를 받아오는 기능
      * 해당 정보들은 HTTP Response Header에 담겨 반환됨
@@ -38,17 +40,19 @@ public class UserAdapter {
      * @since 1.0
      */
 
-    public ResponseEntity<Void> getAuthInfo(RequestUserLoginDTO requestUserLoginDTO){
+    public ResponseEntity<Void> getAuthInfo(RequestUserLoginDTO requestUserLoginDTO) {
         HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(APPLICATION_JSON);
+        headers.setContentType(MediaType.APPLICATION_JSON);
         HttpEntity<RequestUserLoginDTO> entity = new HttpEntity<>(requestUserLoginDTO, headers);
+        ResponseEntity<Void> response = null;
 
-        return restTemplate.exchange(
+        response = restTemplate.exchange(
                 authUrl + "/login",
                 HttpMethod.POST,
                 entity,
-                Void.class
-            );
+                new ParameterizedTypeReference<>() {});
+
+        return response;
     }
 
     /**

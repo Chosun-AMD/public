@@ -16,7 +16,7 @@ public class CustomFailureHandler implements AuthenticationFailureHandler {
      *
      * @param request HttpServletRequest
      * @param response HttpServletResponse
-     * @param exception Sprint Security에서 인증 실패시 발생하는 예외
+     * @param exception Spring Security에서 인증 실패시 발생하는 예외
      * @throws IOException
      * @throws ServletException
      *
@@ -29,10 +29,10 @@ public class CustomFailureHandler implements AuthenticationFailureHandler {
             HttpServletRequest request,
             HttpServletResponse response,
             AuthenticationException exception
-    )throws IOException, ServletException {
-        {
-            log.info("Failure Handler called");
-            response.sendRedirect("/user/login-page");
-        }
+    ) throws IOException, ServletException {
+        log.info("Failure Handler called");
+        response.sendRedirect("/user/login-page?error");
     }
+
+
 }

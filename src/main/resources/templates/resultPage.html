@@ -1,0 +1,15 @@
+<!Doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Login Failed</title>
+</head>
+</html>
+<body>
+
+<script th:inline="javascript">
+  let message = [[${message}]];
+  alert(message);
+  location.replace([[${linkUrl}]]);
+</script>
+</body>
