@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.List;
 
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 
 /**
@@ -41,7 +40,7 @@ public class ResponseDTO<T> {
         return this.errorMessages;
     }
 
-    public ResponseDTO() {
+    public ResponseDTO(ResponseUserRegisterDTO mockResponse) {
     }
 
     public ResponseDTO(boolean success, HttpStatus status, T data, List<String> errorMessages) {
