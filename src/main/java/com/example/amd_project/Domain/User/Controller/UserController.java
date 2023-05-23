@@ -37,7 +37,7 @@ public class UserController {
         ResponseEntity<ResponseUserRegisterDTO> status = userServiceImpl.signUp(requestUserRegisterDTO);
         if(status.getStatusCode() == HttpStatus.OK){
             model.addAttribute("message", "회원가입에 성공했습니다.");
-            model.addAttribute("linkUrl", "/user/login-page");
+            model.addAttribute("linkUrl", "/user/loginForm");
         }
         else if(status.getStatusCode() == HttpStatus.INTERNAL_SERVER_ERROR){
             model.addAttribute("message", "Email이나 Name이 이미 존재합니다.");
@@ -57,7 +57,7 @@ public class UserController {
     @GetMapping("/loginF")
     public String loginF(Model model){
         model.addAttribute("message", "잘못된 로그인 정보입니다.");
-        model.addAttribute("linkUrl", "/user/login-page");
+        model.addAttribute("linkUrl", "/user/loginForm");
         return "/user/loginF";
     }
 }

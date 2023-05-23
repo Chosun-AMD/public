@@ -17,7 +17,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(InvalidLoginRequestException.class)
     public String handleInvalidLoginRequestException(InvalidLoginRequestException ex) {
-        return "/user/login-page";
+        return "/user/loginForm";
     }
 
     @ExceptionHandler(IOException.class)

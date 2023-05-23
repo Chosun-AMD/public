@@ -23,11 +23,11 @@ public class SecurityConfig {
                 .mvcMatchers("/dashboard/**").authenticated()
                 .anyRequest().permitAll();
         http.formLogin()
-                .loginPage("/user/login-page");
+                .loginPage("/user/loginForm");
         http.logout()
                 .logoutUrl("/user/logout")
                 .addLogoutHandler(customLogoutHandler())
-                .logoutSuccessUrl("/user/login-page");
+                .logoutSuccessUrl("/user/loginForm");
         http.addFilterAt(
                 customLoginProcessingFilter(),
                 UsernamePasswordAuthenticationFilter.class

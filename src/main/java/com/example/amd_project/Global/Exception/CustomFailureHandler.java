@@ -31,7 +31,7 @@ public class CustomFailureHandler implements AuthenticationFailureHandler {
             AuthenticationException exception
     ) throws IOException, ServletException {
         log.info("Failure Handler called");
-        response.sendRedirect("/user/login-page?error");
+        response.sendRedirect("/user/loginForm?error");
     }
 
 
