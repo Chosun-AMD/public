@@ -49,9 +49,9 @@ public class UserController {
         return "/resultPage";
     }
 
-    @GetMapping("/login-page")
+    @GetMapping("/loginForm")
     public String loginPage(){
-        return "/user/login-page";
+        return "/user/loginForm";
     }
 
     @GetMapping("/loginF")
