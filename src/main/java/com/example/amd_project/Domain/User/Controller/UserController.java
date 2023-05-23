@@ -51,7 +51,7 @@ public class UserController {
 
     @GetMapping("/login-page")
     public String loginPage(){
-        return "user/login-page";
+        return "/user/login-page";
     }
 
     @GetMapping("/loginF")
