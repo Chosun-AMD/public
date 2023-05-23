@@ -1,5 +1,6 @@
 package com.example.amd_project.Domain.User.DTO;
 
+import com.example.amd_project.Global.Result.ResultCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,9 @@ import lombok.ToString;
 @AllArgsConstructor
 public class ResponseUserRegisterDTO {
     // private Long id;
+
     private String userId;
     private String email;
     private String name;
+
 }

@@ -39,14 +39,14 @@ public class UserServiceImpl implements UserRepository {
         HttpEntity<RequestUserRegisterDTO> entity = new HttpEntity<>(requestUserRegisterDTO, headers);
 
         try {
-            ResponseEntity<ResponseDTO<ResponseUserRegisterDTO>> response = restTemplate.exchange(
+            ResponseEntity<ResponseUserRegisterDTO> response = restTemplate.exchange(
                     authUrl + "/signup",
                     HttpMethod.POST,
                     entity,
                     new ParameterizedTypeReference<>() {}
             );
             if(response.getStatusCode() == HttpStatus.OK){
-                ResponseUserRegisterDTO responseBody = response.getBody().getData();
+                ResponseUserRegisterDTO responseBody = response.getBody();
                 return ResponseEntity.ok(responseBody);
             }
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
