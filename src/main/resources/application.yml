@@ -12,11 +12,11 @@ spring:
   mvc:
     static-path-pattern=/static/**:
   auth:
-    url: http://127.0.0.1:8000/auth
+    url: http://10.96.100.33:8000/auth
   user:
-    url: http://127.0.0.1:8000/user
+    url: http://10.96.100.33:8000/user
   dashboard:
-    url: http://127.0.0.1:8000/react
+    url: http://10.96.100.33:8000/react
   devtools:
     livereload:
       enabled : true
