@@ -2,16 +2,13 @@ package com.example.amd_project.Domain.User.Controller;
 
 import com.example.amd_project.Domain.User.DTO.RequestUserRegisterDTO;
 import com.example.amd_project.Domain.User.DTO.ResponseUserRegisterDTO;
-import com.example.amd_project.Domain.User.Repository.UserRepository;
 import com.example.amd_project.Domain.User.Service.UserServiceImpl;
-import org.apache.http.client.HttpClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
 
 import javax.validation.Valid;
 
@@ -37,7 +34,7 @@ public class UserController {
         ResponseEntity<ResponseUserRegisterDTO> status = userServiceImpl.signUp(requestUserRegisterDTO);
         if(status.getStatusCode() == HttpStatus.OK){
             model.addAttribute("message", "회원가입에 성공했습니다.");
-            model.addAttribute("linkUrl", "/user/loginForm");
+            model.addAttribute("linkUrl", "/user/loginform");
         }
         else if(status.getStatusCode() == HttpStatus.INTERNAL_SERVER_ERROR){
             model.addAttribute("message", "Email이나 Name이 이미 존재합니다.");
@@ -49,15 +46,15 @@ public class UserController {
         return "/resultPage";
     }
 
-    @GetMapping("/loginForm")
+    @GetMapping("/loginform")
     public String loginPage(){
-        return "/user/loginForm";
+        return "/user/loginform";
     }
 
     @GetMapping("/loginF")
     public String loginF(Model model){
         model.addAttribute("message", "잘못된 로그인 정보입니다.");
-        model.addAttribute("linkUrl", "/user/loginForm");
+        model.addAttribute("linkUrl", "/user/loginform");
         return "/user/loginF";
     }
 }
