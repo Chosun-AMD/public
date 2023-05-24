@@ -43,18 +43,18 @@ public class UserController {
             model.addAttribute("message", "잘못된 요청입니다.");
             model.addAttribute("linkUrl", "/user/signup");
         }
-        return "/resultPage";
+        return "resultPage";
     }
 
     @GetMapping("/loginform")
     public String loginPage(){
-        return "/user/loginform";
+        return "user/loginform";
     }
 
     @GetMapping("/loginF")
     public String loginF(Model model){
         model.addAttribute("message", "잘못된 로그인 정보입니다.");
         model.addAttribute("linkUrl", "/user/loginform");
-        return "/user/loginF";
+        return "user/loginF";
     }
 }
