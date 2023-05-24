@@ -8,7 +8,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 
 /**
- * 예외처리를 해주는 클래스입니다.
+ * ResponseDTO입니다.
  * @author : 황시준
  * @since : 1.0
  */
@@ -40,7 +40,7 @@ public class ResponseDTO<T> {
         return this.errorMessages;
     }
 
-    public ResponseDTO(ResponseUserRegisterDTO mockResponse) {
+    public ResponseDTO() {
     }
 
     public ResponseDTO(boolean success, HttpStatus status, T data, List<String> errorMessages) {
