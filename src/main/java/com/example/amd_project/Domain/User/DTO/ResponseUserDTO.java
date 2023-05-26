@@ -21,5 +21,5 @@ public class ResponseUserDTO {
     private String name;
     private String userId;
 
-    // private String authority;
+    private String authority;
 }

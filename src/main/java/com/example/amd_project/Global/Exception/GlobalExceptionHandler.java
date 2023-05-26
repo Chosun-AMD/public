@@ -35,6 +35,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity<String> handleBadCredentialException(BadCredentialsException ex) {
         log.info("A RestClientException occurred: {}", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while communicating with the remote server.");
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("BadCredential Exception");
     }
 }
