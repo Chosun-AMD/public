@@ -16,7 +16,7 @@ spring:
   user:
     url: http://127.0.0.1:8000/user
   dashboard:
-    url: http://10.96.100.39:9001/dashboard
+    url: http://10.96.100.39:9001
   devtools:
     livereload:
       enabled : true
