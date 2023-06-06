@@ -15,7 +15,8 @@ public class CustomAuthenticationSuccessHandler implements AuthenticationSuccess
                                         Authentication authentication) throws IOException, ServletException {
         // 로그인 성공 후 처리 로직을 구현
         // 특정 페이지로 이동하는 경우, redirect 또는 forward를 사용하여 이동할 수 있음
-        response.sendRedirect("/dashboard"); // "/myPage"는 이동할 URL 경로
+        // response.sendRedirect("/dashboard"); // "/myPage"는 이동할 URL 경로
+        response.sendRedirect("/admin");
     }
 
 }
