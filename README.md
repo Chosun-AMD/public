@@ -28,3 +28,5 @@ Push Test
 로그인이 완료됬다면 `localhost:8888/dashboard`로 이동하게 되는데, `/dashboard`페이지는 권한이 없으면 접근되지 않습니다.
 다음 사진은 dashboard페이지이며 추후 dashboard를 추가할 예정입니다.
 ![image](https://user-images.githubusercontent.com/54488922/232457679-a93208bb-10dd-4bff-a3ad-20fbb6c5554b.png)
+
+.
